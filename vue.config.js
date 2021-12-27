@@ -4,11 +4,6 @@ function resolve (dir) {
 　　return path.join(__dirname, dir)
 }
 module.exports = {
-    /** 区分打包环境与开发环境
-     * process.env.NODE_ENV==='production'  (打包环境)
-     * process.env.NODE_ENV==='development' (开发环境)
-     * baseUrl: process.env.NODE_ENV==='production'?"https://cdn.didabisai.com/front/":'front/',//vue-cli3.3以后被弃用
-     */
     // 项目部署的基础路径
     // 我们默认假设你的应用将会部署在域名的根部,
     // 例如 https://www.my-app.com/
@@ -17,7 +12,7 @@ module.exports = {
     // https://www.foobar.com/my-app/
     // 那么将这个值改为 '/my-app/'
     publicPath: process.env.NODE_ENV === 'production'
-    ? '/mybp/'
+    ? '/jxgjplus/'
     : '/',// 构建好的文件输出到哪里
    
     outputDir: "dist", //生成的生产环境构建文件的目录 where to put static assets (js/css/img/font/...) // 是否在保存时使用‘eslint-loader’进行检查 // 有效值: true | false | 'error' // 当设置为‘error’时，检查出的错误会触发编译失败
@@ -94,7 +89,7 @@ module.exports = {
       hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
       proxy:{
         '/': {    //将www.exaple.com印射为/apis
-            target: 'http://tkwx.cn1.utools.club',  //http://gdbbc.pension.taikang.com/mybp/work http://tktk.cn1.utools.club http://tkwx.cn.utools.club http://tktk.cn1.utools.club http://gdbbc.pension.taikang.com/mybp/work      https://apptest.utools.club 
+            target: 'http://106.53.125.63:9080/hz',  //http://gdbbc.pension.taikang.com/hz http://gdbbc.pension.taikang.com/mybp/work http://tktk.cn1.utools.club http://tkwx.cn.utools.club http://tktk.cn1.utools.club http://gdbbc.pension.taikang.com/mybp/work      https://apptest.utools.club 
             secure: false,  // 如果是https接口，需要配置这个参数
             changeOrigin: true,  //是否跨域
             pathRewrite: {

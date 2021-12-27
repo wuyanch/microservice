@@ -5,7 +5,7 @@
 import axios from 'axios';
 import router from '../router';
 import { Message, MessageBox  } from 'element-ui';
-
+import homeUrl from '@/api/goIndex'
 /** 
  * 提示函数 
  * 禁止点击蒙层、显示一秒后关闭
@@ -56,8 +56,30 @@ const errorHandle = (status, other) => {
         case 404:
             tip('请求的资源不存在'); 
             break;
+        case 500:
+            if(other.indexOf('Token') > -1){
+                // token 失效
+                MessageBox.alert('登录超时，请重新进入页面。3秒后自动跳转回首页', '登录超时', {
+                    confirmButtonText: '返回首页',
+                    showClose:false,
+                    callback: action => {
+                        window.location.href = homeUrl;
+                    }
+                });
+                setTimeout(() => {
+                    window.location.href = homeUrl;
+                }, 3000);
+            }
+            break;
         default:
-            console.log(other);   
+            console.log(other);  
+            MessageBox.alert(other, '报错', {
+                confirmButtonText: '返回首页',
+                showClose:false,
+                callback: action => {
+                    window.location.href = homeUrl;
+                }
+            });
         }}
 
 // 创建axios实例
@@ -74,17 +96,29 @@ instance.interceptors.request.use(
         // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token        
         // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码        
-        // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。        
-        // const token = store.state.token;        
-        // token && (config.headers.Authorization = token);        
-        return config;    
+        // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
+        if(!config.url.indexOf('thirdLogin') > -1){
+            const token = window.localStorage.getItem("token");        
+            token && (config.headers.Authorization = token);
+            console.log(config)        
+            return config;
+        }        
     },    
     error => Promise.error(error))
 
 // 响应拦截器
 instance.interceptors.response.use(    
     // 请求成功
-    res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),    
+    res => {
+        if (res.status === 200) {
+            if(res.headers.hasOwnProperty("authorization")){
+              localStorage.setItem('token',res.headers.authorization);
+            }
+            return Promise.resolve(res);
+          } else {
+            return Promise.reject(res);
+          }
+    },
     // 请求失败
     error => {
         const { response } = error;

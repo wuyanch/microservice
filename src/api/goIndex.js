@@ -1,0 +1,2 @@
+const homeUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8016693d70c04bd3&redirect_uri=http%3A%2F%2Fgd.pension.taikang.com%2Fjxgj%2Fcheckbounds.action?constant=0&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+export default  homeUrl
