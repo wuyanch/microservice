@@ -30,6 +30,7 @@
     "postcss-pxtorem": "^5.1.1",
     "sass": "^1.32.8",
     "sass-loader": "^10.1.1",
+    "vue-ls": "^4.0.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

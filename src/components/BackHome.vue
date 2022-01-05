@@ -10,6 +10,7 @@
 
 <script>
 import homeUrl from '@/api/goIndex'
+import wx from "weixin-js-sdk";
 export default {
     name:'BackHome',
     data(){
@@ -27,7 +28,8 @@ export default {
             // if((this.$route.path).replace('/','') != ''){
             //     this.$router.push('/');
             // }
-           window.location.href = homeUrl;
+            this.$ls.get('from') == 0? wx.closeWindow():(window.location.href = homeUrl)
+            console.log(this.$ls.get('from'))
         },
         touchstartHandle(refName, e) {
             e.preventDefault();//禁止滚动时，底层body也跟随这滚动

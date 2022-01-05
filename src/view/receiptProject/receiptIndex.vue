@@ -14,19 +14,21 @@ export default {
         }
     },
     created () {
+        this.$ls.clear();
         this.loginToken();
     },
     methods:{
         async loginToken () {
             let params =await this.getParam();
             receiptApi.receipt.login(params).then(response => {
-                 console.log(response)
                  let fromUrl = this.getQueryVariable('fromUrl') || 0;
+                 console.log('fromUrl')
+                 console.log('fromUrl' + fromUrl)
+                 this.$ls.set('from',fromUrl)
                 if(response.code == 200){
                     console.log('我是跳转到receipt')
                     this.$router.push({path:'/view/receipt'})
                 }else{
-                    let fromUrl = this.getQueryVariable('fromUrl') || 0;
                     this.$alert('登录失败。3秒后自动跳转回首页', '登录失败', {
                         confirmButtonText: '返回首页',
                         showClose:false,

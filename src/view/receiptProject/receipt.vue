@@ -2,7 +2,7 @@
     <div class="receipt-page">
         <div>
         <!-- 按钮和截止日期 -->
-            <p class="receipt-deadline">数据截止时间：{{receiptDealineTime}} 24:00</p>
+            <p class="receipt-deadline">回执状态截止：{{receiptDealineTime}} 24:00 <button class="rule" @click="centerDialogVisible = true"><i class="el-icon-question"></i>回执规则</button></p>
             <p class="receipt-classification">
                 <button @click="switchReceipt(0)" :class="[currentReceiptButton== 0?'active':'']">下月到期</button>
                 <button @click="switchReceipt(1)" :class="[currentReceiptButton== 1?'active':'']">本月到期</button>
@@ -33,11 +33,11 @@
             </el-autocomplete> 
         </div>
         <!-- 提示框 -->
-        <div class="receipt-tip" v-if="currentReceiptButton != 3 && !selectStart">
+        <!-- <div class="receipt-tip" v-if="currentReceiptButton != 3 && !selectStart">
             <p>
                <span v-html=promptContent[currentReceiptButton].content></span>
             </p>
-        </div>
+        </div> -->
         <!-- 当前条件下的回执数 -->
         <div class="receipt-show" v-if="dataTopList.flag">
             <span><b>{{dataTopList[insureReceiptGetData[currentReceiptButton]]}}</b><br/>投保人(人)</span>
@@ -104,6 +104,17 @@
         </div>
         <!-- 在加载中 -->
         <div v-loading.fullscreen.lock="!isLoadingSuccess" class="full-screen"></div>
+        <!-- 回执规则弹框 -->
+        <el-dialog
+        title=""
+        :visible.sync="centerDialogVisible"
+        width="100%"
+        class="centerDialog-visible">
+        <span>回执回销规则（T月承保）：<br/>T月或T+1月回执回销：正常发放提奖；<br/>T+2月回执回销：不发提奖，不做扣罚；<br/>T+3月及以上回执回销：不发提奖，需扣罚50元/单。</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="centerDialogVisible = false">已 了 解</el-button>
+        </span>
+        </el-dialog>
         <!-- 返回首页 -->
         <BackHome />
     </div>
@@ -119,6 +130,8 @@ export default {
     // directives: {infiniteScroll},
     data(){
         return{
+            // 弹窗
+            centerDialogVisible: false,
             // 是否加载完成
             isLoadingSuccess: false,
             homeTop : 0,
@@ -600,7 +613,7 @@ export default {
 <style lang="scss" scoped>
 .receipt-page {
     font-size: 12px;
-    padding: 10px 15px;
+    padding: 5px 15px 10px 15px;
     p{
          margin: 0;
     }
@@ -657,6 +670,7 @@ export default {
     }
     .receipt-deadline{
         text-align: right;
+        padding-bottom: 5px;
     }
     .receipt-tip{
         padding: 2px 15px;
@@ -728,7 +742,7 @@ export default {
     .infinite-list{
         font-size: 13px;
         margin-top: 2vh;
-        height: calc(100vh - 28vh);
+        height: calc(100vh - 22vh);
     }
     .infinite-list-three{
         font-size: 13px;
@@ -870,11 +884,22 @@ export default {
         padding: 15px 0 5px 0;
         color: #9b9b9b;
     }
+    .rule{
+        color:#007eff;
+        background: none;
+        border:none;
+        font-size: 12px;
+    }
 }
 </style>
 
 <style lang="scss">
 .receipt-page{
+    .el-input__inner,.el-input-group__prepend div.el-select .el-input__inner{
+        height: 37px;
+        line-height:37px;
+        overflow: hidden;
+    }
     .el-timeline{
         padding: 8px 5px;
     }
@@ -927,7 +952,19 @@ export default {
         border-top-right-radius: 100px;
         border-bottom-right-radius: 100px;
     }
-    
+    .centerDialog-visible{
+        .el-dialog{
+            position: fixed;
+            bottom: 0;
+            margin-bottom: 0;
+        }
+        
+    }
+    .el-dialog__body{
+        height: 20vh;
+        text-align: left;
+        line-height: 25px;
+    }
 }
 .data-loading{
     height: 2vh;
