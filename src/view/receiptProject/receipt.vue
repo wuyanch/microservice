@@ -429,6 +429,8 @@ export default {
                         params = {insuredUnit: this.searchContent}
                     }else if(this.selectLabel == 5){
                         params = {personPolicyNo: this.searchContent}
+                    }else if(this.selectLabel == 6){
+                         params = {riskType: this.searchContent}
                     }
                     this.selectPolicyList(this.data.currentPage,params);
                 }else{
@@ -486,6 +488,8 @@ export default {
                     params = {insuredUnit: this.searchContent}
                 }else if(this.selectLabel == 5){
                     params = {personPolicyNo: this.searchContent}
+                }else if(this.selectLabel == 6){
+                    params = {riskType: this.searchContent}
                 }
                 if(this.searchContent != ''){
                     this.waitLoading = true;
@@ -584,7 +588,7 @@ export default {
         createFilter(queryString) {
             return (restaurant) => {
                 // return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-                return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1);
+                return (restaurant.value != null?restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1:'');
             };
         },
     },
@@ -723,7 +727,7 @@ export default {
                 position: absolute;
                 // right: -60px;
                 right: 0px;
-                bottom: 2px;
+                bottom: -1px;
                 box-shadow: 1px 1px 0px 1px #f2e6dd inset;
                 z-index: 99;
             }
@@ -733,9 +737,9 @@ export default {
                 background: none;
                 color: #FF9800;
                 z-index: 99;
-                line-height: 20px;
-                padding-top: 5px;
+                line-height: 30px;
                 font-size: 12px;
+                height: 30px;
             }
         }
     }
@@ -854,7 +858,7 @@ export default {
             transform: perspective(10px) rotateX(6deg);
             position: absolute;
             right: 110px;
-            bottom: 0px;
+            bottom: -1px;
             box-shadow: 1px 1px 0px 1px #f2e6dd inset;
             z-index: 0;
         }

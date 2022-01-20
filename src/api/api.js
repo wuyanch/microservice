@@ -3,10 +3,12 @@
  */
 // 回执模块接口
 import receipt from '@/api/receipt';
-// 其他模块的接口……
+// 续期模块接口
+import renewal from '@/api/renewal';
 
 // 导出接口
 export default {    
-    receipt
+    receipt,
+    renewal
     // ……
 }

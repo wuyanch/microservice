@@ -1,5 +1,5 @@
 <template>
-    <div ref="dragBox" class="dragBox"
+    <div ref="dragBox" class="dragBox" id="homeDragBox"
     @touchstart="touchstartHandle('dragBox',$event)"
     @touchmove="touchmoveHandle('dragBox',$event)"
     @touchend="touchendHandle('dragBox',$event)">
@@ -18,9 +18,17 @@ export default {
             homeLogo: require('@a/indexVue/home.png'),
             coordinate: {
                 client: {},
-                elePosition: {}
+                elePosition: {
+                    left:this.$ls.get('coordinate')?this.$ls.get('coordinate').left:innerWidth,
+                    top:this.$ls.get('coordinate')?this.$ls.get('coordinate').top:50
+                }
             }
         }
+    },
+    mounted(){
+        console.log('homeurl');
+        (document.getElementById('homeDragBox')).style.left = this.coordinate.elePosition.left == innerWidth?(this.coordinate.elePosition.left-50) + 'px':this.coordinate.elePosition.left + 'px';
+        (document.getElementById('homeDragBox')).style.top = this.coordinate.elePosition.top  + 'px';
     },
     methods:{
         goHome: function(){
@@ -28,7 +36,9 @@ export default {
             // if((this.$route.path).replace('/','') != ''){
             //     this.$router.push('/');
             // }
-            this.$ls.get('from') == 0? wx.closeWindow():(window.location.href = homeUrl)
+            // http://bbc.taikang.com/tkp-agent/o2o/web/#/project/detail?projectId= --正式环境
+            // 'https://wxyl.pension.taikang.com/tkp-agent/o2o/web/#/project/detail?projectId=' -- 测试环境
+            this.$ls.get('from') == 'OTO5G'? (window.location.href = process.env.VUE_APP_OTO_FIVRG+this.$ls.get('backUrl')):(window.location.href = homeUrl)
             console.log(this.$ls.get('from'))
         },
         touchstartHandle(refName, e) {
@@ -42,7 +52,6 @@ export default {
             // 记录需要移动的元素坐标
             this.coordinate.elePosition.left = this.$refs[refName].offsetLeft
             this.coordinate.elePosition.top = this.$refs[refName].offsetTop
-
         },
         touchmoveHandle(refName, e) {
             let element = e.targetTouches[0]
@@ -72,11 +81,13 @@ export default {
                     // 移动当前元素
                     this.$refs[refName].style.left = 0 + 'px'
                     this.$refs[refName].style.borderRadius = '0px 30px 30px 0px'
+                     this.$ls.set('coordinate',{left:0,top:currentTop})
                     return
                 }else{
                     // 移动当前元素
                     this.$refs[refName].style.left =  innerWidth-this.$refs[refName].offsetWidth + 'px'
                     this.$refs[refName].style.borderRadius = '30px 0px 0px 30px'
+                     this.$ls.set('coordinate',{left:innerWidth-this.$refs[refName].offsetWidth,top:currentTop})
                     return
                 }
             }
@@ -91,8 +102,8 @@ export default {
     width: 50px;
     height: 45px;
     position: fixed;
-    right: 0;
-    bottom: 135px;
+    // right: 0;
+    // bottom: 135px;
     border-radius: 30px 0px 0px 30px;
     overflow: hidden;
     z-index: 999;

@@ -17,7 +17,8 @@ function clipboardError() {
     })
 }
 export default function copyText(text,e,successTip) {
-    const clipboard = new Clipboard(e.target, {
+    console.log('lalal')
+    const clipboard = new Clipboard(e.target || e, {
         text: () => text
     })
     clipboard.on('success', () => {

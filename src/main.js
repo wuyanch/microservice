@@ -20,13 +20,21 @@ import './css/font.css'
 
 // vue-ls 配置
 const storageOptions = {
-  namespace:'hz_',
+  namespace:'micro_',
   name:'ls',
   storage:'local'
 }
 Vue.use(Storage, storageOptions)
 
 Vue.config.productionTip = false
+
+router.beforeEach((to,from,next)=>{
+  if(to.meta.title){
+    document.title = to.meta.title;
+  }
+  next()
+})
+
 
 new Vue({
   router,

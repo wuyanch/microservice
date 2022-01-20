@@ -11,11 +11,11 @@ module.exports = {
     // 指定子路径。比如将你的应用部署在
     // https://www.foobar.com/my-app/
     // 那么将这个值改为 '/my-app/'
-    publicPath: process.env.NODE_ENV === 'production'
+    publicPath: process.env.VUE_APP_NODE_ENV === 'production'
     ? '/jxgjplus/'
-    : '/',// 构建好的文件输出到哪里
+    : '/',// 构建好的文件输出到哪里/jxgjplus/
    
-    outputDir: "dist", //生成的生产环境构建文件的目录 where to put static assets (js/css/img/font/...) // 是否在保存时使用‘eslint-loader’进行检查 // 有效值: true | false | 'error' // 当设置为‘error’时，检查出的错误会触发编译失败
+    outputDir: process.env.VUE_APP_NODE_ENV=='test'?'testDist':"dist", //生成的生产环境构建文件的目录 where to put static assets (js/css/img/font/...) // 是否在保存时使用‘eslint-loader’进行检查 // 有效值: true | false | 'error' // 当设置为‘error’时，检查出的错误会触发编译失败
     assetsDir:"static",//放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
     lintOnSave: false, // 使用带有浏览器内编译器的完整构建版本 // https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
     runtimeCompiler: false, // babel-loader默认会跳过`node_modules`依赖. // 通过这个选项可以显示转译一个依赖
@@ -81,6 +81,7 @@ module.exports = {
    
     pwa: {}, // configure webpack-dev-server behavior
     devServer: {
+      hot:true,
       open: process.platform === "darwin",
       disableHostCheck: false,
       host: "0.0.0.0",
@@ -89,7 +90,7 @@ module.exports = {
       hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
       proxy:{
         '/': {    //将www.exaple.com印射为/apis
-            target: 'http://106.53.125.63:9080/hz',  //http://gdbbc.pension.taikang.com/hz http://gdbbc.pension.taikang.com/mybp/work http://tktk.cn1.utools.club http://tkwx.cn.utools.club http://tktk.cn1.utools.club http://gdbbc.pension.taikang.com/mybp/work      https://apptest.utools.club 
+            target: 'http://gdbbc.pension.taikang.com/hz',  //http://qywork.taikang95522.com:9080/hz  http://gdbbc.pension.taikang.com/mybp/work http://tktk.cn1.utools.club http://tkwx.cn.utools.club http://tktk.cn1.utools.club http://gdbbc.pension.taikang.com/mybp/work      https://apptest.utools.club 
             secure: false,  // 如果是https接口，需要配置这个参数
             changeOrigin: true,  //是否跨域
             pathRewrite: {

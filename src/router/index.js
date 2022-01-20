@@ -135,6 +135,36 @@ export default new router({
             }
         },
         {
+          path: '/view/renewalIndex',
+          name: 'renewalIndex',
+          component: () => import('@/view/renewalService/renewalIndex.vue'),
+          meta:{
+            // 页面标题title
+            title: '续期待办',
+            keepAlive: false //是否缓存
+          }
+        },
+        {
+          path: '/view/renewalService/renewal',
+          name: 'renewal',
+          component: () => import('@/view/renewalService/renewal.vue'),
+          meta:{
+            // 页面标题title
+            title: '续期待办',
+            keepAlive: false //是否缓存
+          }
+        },
+        {
+          path: '/view/renewalService/renewalWhole',
+          name: 'renewalWhole',
+          component: () => import('@/view/renewalService/renewalWhole.vue'),
+          meta:{
+            // 页面标题title
+            title: '续期待办',
+            keepAlive: false //是否缓存
+          }
+        },
+        {
           path: '/view/common/error',
           name: 'error',
           component: () => import('@/view/common/error.vue'),
