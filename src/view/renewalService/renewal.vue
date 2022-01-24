@@ -555,7 +555,8 @@ export default {
             this.unitArray = [];
             let params = {
                 "projectName": this.projectName,
-	            "tknumber": this.tknumber,
+	            "tknumber": this.tkNumber,
+                "userIdentity":this.projectIdentity
             }
             renewalApi.renewal.renewalInsuredUnitList(params).then(respone => {
                console.log(respone)
