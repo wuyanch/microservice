@@ -58,7 +58,7 @@
                <div class="renewal-per-box" v-if="item.pageVo != null">
                    <!-- 生成通知 -->
                    <div class="notice-button">
-                       <el-button class="" @click="goReceiptNotice(index)"><img src="@a/renewal/notice.png" alt="" srcset=""> 生成通知</el-button>
+                       <el-button class="create-notice" @click="goReceiptNotice(index)"><span><img src="@a/renewal/notice.png" alt="" srcset=""> 生成通知</span></el-button>
                    </div>
                    <div :data-index=index+1 class="infinite-list-top renewal-per-card-top">
                         <p class="insured-unit renewal-reative"><span>投保单位</span>：<span>{{item.insuredunit}}</span></p>
@@ -828,17 +828,28 @@ export default {
 .notice-button{
     text-align: right;
     .el-button{
-        padding: 8px 20px;
+        padding:0;
         background: url('../../assets/renewal/noticeBg.png') no-repeat;
         background-size: cover;
         border: none;
         color: white;
         font-size: 13px;
         margin-bottom: -4px;
+        span{
+            display: block;
+            width: 90px;
+            height: 22px;
+            line-height: 22px;
+            margin: 5px 12px 5px 20px;
+            box-sizing: border-box;
+            background: #fff;
+            border-radius: 30px;
+            color: #4484fc;
+        }
     }
     img{
         width: 15px;
-        vertical-align: middle;
+        vertical-align: text-bottom;
     }
 }
 .renewal-show{
